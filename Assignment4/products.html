@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	
+	<style type="text/css">
+
+		body 
+		{
+			background-image: linear-gradient(to right, #a6d9ea , yellow); 
+			background-repeat: no-repeat; 
+			background-position: center center;
+			background-size: cover;
+			background-color: #e2e2e2;
+		}
+		
+		hr.line{
+			width: 100%;
+			margin-left:0px;
+			background-color: red;
+		}
+
+		#textBox input[name=emailName], [name=tac], [name=infoName] {
+			width: 285%;
+			padding: 6.5px 20px;
+			display: inline-block;
+			min-width: 48.8%;
+			border: 1px;
+			border-radius: 1px;
+		
+		}
+
+		#dateBox input[name=dateName] {
+			width: 91%;
+			padding: 5px 20px;
+			display: inline-block;
+			min-width: 48.8%;
+			border: 1px;
+			border-radius: 1px;
+		
+		}
+
+		#wrapleft{
+			width: 160px;
+			height: 40px;
+			float: center; 
+		}
+
+		.errorMsg{
+			color: red;
+		}
+
+	</style>
+
+</head>
+<body onload="onLoad()" onload="hideTotal()"> <!--loadevent1 -->
+	<div id="content">
+		<center><h1 style="background-color: yellow;"><span style="color: #11939a;" ><font size="6"><p>Products</p></font></span></h1></center> 
+		<hr class="line">
+		<center><h2 style="text-decoration: underline; text-decoration-color: red"><span style="color: #11939a;" ><font><p onmousedown="mouseDown(this, 'red')" onmouseup="mouseDown(this, 'blue')">Checkout</p></font></span></h2></center><!--mouseevent1 and mouseevent2 mouse down and mouse up -->
+		
+		<form name="forms" id="productform" action="" method="get"  onreset="onReset()" onsubmit="return validateForm()"> <!-- inputevent3 inputevent4-->
+
+		<div id="textBox">
+			<h4><font><span style="color: #11939a;" ><p>Enter your E-Mail address.</p></span></font></h4>
+			<div id="wrapleft">
+			<input type="text" name="emailName" id="emailId" onblur="onBlur()" placeholder="Enter E-Mail"> <!-- inputevent1 -->
+			</div><br>
+
+		</div>
+
+		<span id="errorEmailID" class="errorMsg"></span>
+
+
+		<div id="dateBox">
+			<h4><font><span style="color: #11939a;" ><p>Enter the date</p></span></font></h4>
+			<input type="date" name="dateName" id="dateId">
+		</div><br>
+
+		<span id="errorDateID" class="errorMsg"></span>
+
+		
+		<h4><font><span style="color: #11939a;" ><p>Select the Products you want</p></span></font></h4>
+
+			<input type="checkbox"  name="checkNameLCD" id="LCDId" onclick="LCDOnClick()" onchange="calculateTotal()">LCD Monitor- $100
+
+			<select id="selectLCD" style="margin-left: 250px;" onchange="calculateTotal()" onchange="calculateTotal()">
+				<option value="None">0</option>
+				<option value="hundred">1</option>
+				<option value="2hundred">2</option>
+				<option value="3hundred">3</option>
+				<option value="4hundred">4</option>
+				<option value="5hundred">5</option>
+			</select>
+			<br>
+
+			<input type="checkbox"  name="checkNameMouse" id="MouseId" onclick="MouseOnClick()" onchange="calculateTotal()">Mouse- $5
+			
+			<select id="selectMouse" style="margin-left: 315px;" onchange="calculateTotal()">
+				<option value="None2">0</option>
+				<option value="five">1</option>
+				<option value="ten">2</option>
+				<option value="fifteen">3</option>
+				<option value="twenty">4</option>
+				<option value="twentyfive">5</option>
+			</select>
+			<br>
+
+			<input type="checkbox" name="checkNameKeyboard" id="KeyboardId" onclick="KeyboardOnClick()" onchange="calculateTotal()">Keyboard- $15
+
+			<select id="selectKeyboard" style="margin-left: 288px;" onchange="calculateTotal()">
+				<option value="None3">0</option>
+				<option value="fifteen2">1</option>
+				<option value="thirty">2</option>
+				<option value="fortyfive">3</option>
+				<option value="sixty">4</option>
+				<option value="seventyfive">5</option>
+			</select>
+			<br>
+			<span id="errorCheckProductID" class="errorMsg"></span>
+			<br>
+
+
+		<h4><font><span style="color: #11939a;" ><p>Select your Payment System</p></span></font></h4>
+			<input type="radio" value="checked" name="radioBtn" id="CreditID" onclick="CreditOnClick()">Credit Card
+			<input type="radio" value="checked" name="radioBtn" id="FundID" onclick="FundOnClick()">Online Fund Transfer
+			<div id="wrapleft">
+			<input type="text" name="infoName" id="infoId" placeholder="Enter your Credit Card Information (xxxx-xxxx-xxxx-xxxx)">
+			</div>
+			<span id="errorCreditID" class="errorMsg"></span>
+			<div id="wrapleft">
+			<input type="text" name="infoName" id="infoId2" placeholder="Enter your Bank Account Information (xxxxxxxxxx)">
+			</div>
+			<span id="errorFundID" class="errorMsg"></span>
+
+			
+
+			<span id="errorRadioID" class="errorMsg"></span>
+			<br>
+
+		<!--<div id="textBox">
+			<h4><font><span style="color: #11939a;" ><p>Enter Info for your Payment.</p></span></font></h4>
+		</div>-->
+
+		<div id="textBox">
+			<h4><font><span style="color: #11939a;" ><p>Enter TAC Security Code</p></span></font></h4>
+			<div id="wrapleft">
+
+			<input type="text" onfocus="onFocus(this)" name="tac" id="TACId" placeholder="Enter TAC"> <!-- inputevent5 -->
+			
+			</div><br>
+		</div>
+		<span id="errorTACID" class="errorMsg"></span>
+
+		<div id="totalPrice"></div>
+
+		<div><input onclick="clickMouse()"  type="submit" value="SignUp"></div> <!-- mousevent5 -->
+		<p id="mousy"></p>
+
+		<div><input type="reset" name="reset" value="Reset"></div> 
+
+
+		</form>
+
+		<script type="text/javascript">
+
+			document.getElementById("infoId").style.display ="none";
+
+
+			var KeyboardId = document.getElementById("KeyboardId");
+			var LCDId = document.getElementById("LCDId");
+			var MouseId = document.getElementById("MouseId");
+			var FundID = document.getElementById("FundID");
+			var CreditID = document.getElementById("CreditID");
+
+
+			function CreditOnClick(Credit) {
+				if (CreditID.checked) {
+					document.getElementById("infoId").style.display="";
+					document.getElementById("infoId2").style.display="none";
+					FundID.checked == false;
+				} else {
+					document.getElementById("infoId").style.display="none";
+				}
+			}
+
+			document.getElementById("infoId2").style.display ="none";
+
+			function FundOnClick(Fund) {
+
+				if (FundID.checked) {
+					document.getElementById("infoId2").style.display="";
+					document.getElementById("infoId").style.display="none";
+					CreditID.checked = false;
+				} else {
+					document.getElementById("infoId2").style.display="none";
+				}
+			}
+
+			document.getElementById("selectLCD").style.display ="none";
+
+			function LCDOnClick(LCD) {
+				if (LCDId.checked) {
+					document.getElementById("selectLCD").style.display ="";
+				} else {
+					document.getElementById("selectLCD").style.display ="none";
+				}
+			}
+
+			document.getElementById("selectMouse").style.display ="none";
+
+			function MouseOnClick(Mouse) {
+				if (MouseId.checked) {
+					document.getElementById("selectMouse").style.display ="";
+				} else {
+					document.getElementById("selectMouse").style.display ="none";
+				}
+			}
+			document.getElementById("selectKeyboard").style.display ="none";
+
+			function KeyboardOnClick(Keyboard) {
+				if (KeyboardId.checked) {
+					document.getElementById("selectKeyboard").style.display ="";
+				} else {
+					document.getElementById("selectKeyboard").style.display ="none";
+				}
+			}
+
+
+
+			function validateForm() {
+				var Credit = document.getElementById('CreditID').checked;
+				var Fund = document.getElementById('FundID').checked;
+				var a = document.forms.radioBtn;
+				var emailId = document.getElementById("emailId").value;
+				var infoId = document.getElementById("infoId").value;
+				var infoId2 = document.getElementById("infoId2").value;
+				var TACId = document.getElementById("TACId").value;
+				var pattern = /^[^\s]+@[/uow]{3}.[/edu]{3}.[/au]{2}$/
+				var pattern2 = /^[0-9]{3}$/
+				var pattern3 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/
+				var pattern4 = /^[0-9]{10,14}$/
+				var dateId = document.getElementById("dateId").value;
+
+				if (pattern.test(emailId))
+				{
+					document.getElementById('errorEmailID').innerHTML = "";
+				}else{
+					document.getElementById('errorEmailID').innerHTML = "Check your E-Mail";
+					return false;
+				}
+
+				if (dateId == null || dateId.trim() == "") 
+				{
+					document.getElementById('errorDateID').innerHTML = "Check the date.";
+					return false;
+				}else{
+					document.getElementById('errorDateID').innerHTML = "";
+				}
+				
+				if (((LCDId.checked) || (MouseId.checked) || (KeyboardId.checked)) == false ) {
+					document.getElementById('errorCheckProductID').innerHTML = "Please select at least 1";
+					return false;
+				} else {
+					document.getElementById('errorCheckProductID').innerHTML = "";
+				}
+
+
+				if ((Credit=="")&&(Fund=="")) {
+					document.getElementById('errorRadioID').innerHTML = "Select Payment Method";
+					return false;
+				}	
+					document.getElementById('errorRadioID').innerHTML = "";
+
+		     	if (((pattern3.test(infoId) && CreditID.checked) || FundID.checked == true) == false)
+				{
+					document.getElementById('errorCreditID').innerHTML = "Check your Credit Card";
+
+					document.getElementById("errorFundID").style.display ="none";
+					document.getElementById('errorTACID').innerHTML = "";
+
+					return false;				
+				}
+
+				if (((pattern4.test(infoId2) && FundID.checked) || CreditID.checked == true) == false) {
+					document.getElementById('errorFundID').innerHTML = "Check your Bank Account";
+
+					document.getElementById("errorCreditID").style.display ="none";
+					document.getElementById('errorTACID').innerHTML = "";
+
+					return false;			
+				}
+
+				if (pattern2.test(TACId))
+				{
+					document.getElementById('errorTACID').innerHTML = "";
+				}else{
+					document.getElementById("errorFundID").style.display ="none";
+					document.getElementById("errorCreditID").style.display ="none";
+					document.getElementById('errorTACID').innerHTML = "You have not entered the 3 Digit TAC";
+					return false;
+				}
+				
+
+				return true;
+			}
+
+			 var lcd_prices= new Array();
+             lcd_prices["None"]=0;
+             lcd_prices["hundred"]=100;
+             lcd_prices["2hundred"]=200;
+             lcd_prices["3hundred"]=300;
+             lcd_prices["4hundred"]=400;
+             lcd_prices["5hundred"]=500;
+
+             var mouse_prices= new Array();
+             mouse_prices["None2"]=0;
+             mouse_prices["five"]=5;
+             mouse_prices["ten"]=10;
+             mouse_prices["fifteen"]=15;
+             mouse_prices["twenty"]=20;
+             mouse_prices["twentyfive"]=25;
+
+             var keyboard_prices= new Array();
+             keyboard_prices["None3"]=0;
+             keyboard_prices["fifteen2"]=15;
+             keyboard_prices["thirty"]=30;
+             keyboard_prices["fortyfive"]=45;
+             keyboard_prices["sixty"]=60;
+             keyboard_prices["seventyfive"]=75;
+
+             function calculateTotal()
+            {
+            	var LCDPricing=0;
+                var theForm = document.forms["productform"];
+                var selectedFilling = document.getElementById("selectLCD");
+
+                LCDPricing = lcd_prices[selectedFilling.value];
+
+                var MousePricing=0;
+                var theForm2 = document.forms["productform"];
+                var selectedFilling2 = document.getElementById("selectMouse");
+
+                MousePricing = mouse_prices[selectedFilling2.value];
+
+                var KeyboardPricing=0;
+                var theForm3 = document.forms["productform"];
+                var selectedFilling3 = document.getElementById("selectKeyboard");
+
+                KeyboardPricing = keyboard_prices[selectedFilling3.value];
+
+                var productPrice=0;
+                if (LCDId.checked)
+					productPrice = productPrice+ LCDPricing;
+				if (MouseId.checked)
+                    productPrice = productPrice+ MousePricing;
+                if (KeyboardId.checked)
+                	productPrice = productPrice + KeyboardPricing;
+                
+                var displaying = document.getElementById('totalPrice');
+                displaying.style.display='block';
+                displaying.innerHTML = "Total Price For the Products are $"+productPrice;
+
+            }
+
+            function hideTotal()
+            {
+                var displaying = document.getElementById('totalPrice');
+                displaying.style.display='none';
+            }
+
+            function mouseDown(element, colr) { //mouse event 
+            	element.style.color = colr;
+            }
+
+            function clickMouse() { //mouse event
+            	document.getElementById("mousy").innerHTML = "The Sign Up button have been clicked. ";
+
+            }
+
+            function onBlur() { 
+            	var mail = document.getElementById("emailId");
+            	mail.value = mail.value.toLowerCase();
+
+            }
+
+            function onReset() {
+            	alert("This form have been Reset ");
+            }
+
+            function onFocus(text) {
+            	text.style.background = "yellow";
+
+            }
+
+            function onLoad() {
+            	alert("The Page have been loaded successfully");
+
+            }
+
+           
+
+		</script>	
+	</div>
+	
+</body>
+</html>
